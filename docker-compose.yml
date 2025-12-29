@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: kasparro-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kasparro_etl
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kasparro-api
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kasparro_etl
+      POSTGRES_PORT: 5432
+      COINPAPRIKA_API_KEY: ${COINPAPRIKA_API_KEY:-}
+      COINGECKO_API_KEY: ${COINGECKO_API_KEY:-}
+      RUN_ETL_ON_STARTUP: "true"
+      DEBUG: "false"
+      LOG_LEVEL: INFO
+      LOG_FORMAT: json
+      RATE_LIMIT_ENABLED: "true"
+      CHECKPOINT_ENABLED: "true"
+      SCHEMA_DRIFT_ENABLED: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  # Optional: ETL cron job service
+  etl-cron:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kasparro-etl-cron
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kasparro_etl
+      POSTGRES_PORT: 5432
+      COINPAPRIKA_API_KEY: ${COINPAPRIKA_API_KEY:-}
+      COINGECKO_API_KEY: ${COINGECKO_API_KEY:-}
+    depends_on:
+      - db
+      - api
+    volumes:
+      - ./data:/app/data
+    command: >
+      sh -c "
+        while true; do
+          echo 'Running scheduled ETL...'
+          python -c 'import asyncio; from services.database import DatabaseService; from services.etl_orchestrator import ETLOrchestrator; db = DatabaseService(); asyncio.run(db.initialize()); orchestrator = ETLOrchestrator(db); asyncio.run(orchestrator.run_full_etl())'
+          echo 'ETL completed. Sleeping for 1 hour...'
+          sleep 3600
+        done
+      "
+
+volumes:
+  postgres_data:
