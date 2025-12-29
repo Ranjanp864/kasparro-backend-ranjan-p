@@ -1,8 +1,8 @@
-# 🚀 Kasparro Backend & ETL System
+#  Kasparro Backend & ETL System
 
 A production-grade ETL pipeline and backend API system for cryptocurrency data ingestion, featuring robust error handling, incremental ingestion, schema drift detection, and comprehensive observability.
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Features](#-features)
 - [Architecture](#-architecture)
@@ -13,9 +13,9 @@ A production-grade ETL pipeline and backend API system for cryptocurrency data i
 - [Cloud Deployment](#-cloud-deployment)
 - [Design Decisions](#-design-decisions)
 
-## ✨ Features
+##  Features
 
-### P0 - Foundation Layer ✅
+### P0 - Foundation Layer 
 - **Multi-Source Data Ingestion**: CoinPaprika API, CoinGecko API, and CSV files
 - **PostgreSQL Storage**: Separate raw and normalized data tables
 - **Type Validation**: Pydantic models for data validation
@@ -26,7 +26,7 @@ A production-grade ETL pipeline and backend API system for cryptocurrency data i
 - **Health Checks**: Database connectivity and ETL status monitoring
 - **Test Suite**: Comprehensive pytest coverage
 
-### P1 - Growth Layer ✅
+### P1 - Growth Layer 
 - **Third Data Source**: CSV file ingestion with quirks handling
 - **Schema Unification**: Consistent schema across all sources
 - **Advanced Checkpointing**: Resume-on-failure with idempotent writes
@@ -34,7 +34,7 @@ A production-grade ETL pipeline and backend API system for cryptocurrency data i
 - **Full Test Coverage**: Tests for incremental ingestion, failures, schema mismatches
 - **Clean Architecture**: Well-organized codebase with separation of concerns
 
-### P2 - Differentiator Layer ✅
+### P2 - Differentiator Layer 
 - **Schema Drift Detection**: Fuzzy matching with confidence scoring
 - **Failure Recovery**: Automatic resume from checkpoints
 - **Rate Limiting**: Per-source rate limits with exponential backoff
@@ -42,7 +42,7 @@ A production-grade ETL pipeline and backend API system for cryptocurrency data i
 - **Run Comparison**: `/runs` endpoint for historical analysis
 - **Health Checks**: Docker health checks for container orchestration
 
-## 🏗 Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -86,7 +86,7 @@ A production-grade ETL pipeline and backend API system for cryptocurrency data i
 3. **Load**: Save to PostgreSQL with checkpointing and idempotent writes
 4. **Observe**: Log metrics, track runs, expose health endpoints
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -229,7 +229,7 @@ Manually trigger ETL process
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 kasparro-backend/
@@ -257,7 +257,7 @@ kasparro-backend/
 └── README.md                  # This file
 ```
 
-## 🧪 Testing
+##  Testing
 
 ### Run All Tests
 
@@ -277,14 +277,14 @@ This runs:
 ### Test Coverage
 
 The test suite covers:
-- ✅ ETL transformation logic (all sources)
-- ✅ API endpoints with various filters
-- ✅ Checkpoint save/retrieve/complete
-- ✅ Failure scenarios and recovery
-- ✅ Schema drift detection
-- ✅ Idempotent writes
-- ✅ Rate limiting and backoff
-- ✅ Full orchestration
+-  ETL transformation logic (all sources)
+-  API endpoints with various filters
+-  Checkpoint save/retrieve/complete
+-  Failure scenarios and recovery
+-  Schema drift detection
+-  Idempotent writes
+-  Rate limiting and backoff
+-  Full orchestration
 
 ### Manual Testing
 
@@ -302,7 +302,7 @@ make stats
 make trigger-etl
 ```
 
-## ☁️ Cloud Deployment
+##  Cloud Deployment
 
 ### AWS Deployment (Recommended)
 
@@ -383,7 +383,7 @@ Similar steps using:
 - Azure Database for PostgreSQL
 - Logic Apps for scheduling
 
-## 🎨 Design Decisions
+##  Design Decisions
 
 ### Why FastAPI?
 - **Performance**: Async support, faster than Flask
@@ -486,7 +486,7 @@ class NewSourcePipeline(BasePipeline):
         pass
 ```
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Issues
 
@@ -527,7 +527,7 @@ curl http://localhost:8000/runs
 make trigger-etl
 ```
 
-## 📊 Monitoring & Observability
+##  Monitoring & Observability
 
 ### Structured Logging
 
@@ -567,11 +567,11 @@ HEALTHCHECK --interval=30s --timeout=10s \
   CMD python -c "import requests; requests.get('http://localhost:8000/health')"
 ```
 
-## 📝 License
+##  License
 
 This project is developed as part of the Kasparro Backend Engineering Assignment.
 
-## 🤝 Contributing
+##  Contributing
 
 This is an assignment submission. For questions or issues, contact the Kasparro team.
 
