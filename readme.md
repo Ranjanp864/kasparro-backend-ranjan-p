@@ -1,4 +1,20 @@
-#  Kasparro Backend & ETL System
+# Kasparro Backend & ETL System
+
+## **LIVE DEPLOYMENT**
+
+** Deployed URL:** https://kasparro-backend-ranjan-p.onrender.com
+
+**Platform:** Render.com  
+**Status:** ✅ Live and Running  
+**Database:** PostgreSQL (Render managed)
+
+### Test the Live API:
+- **Health Check:** https://kasparro-backend-ranjan-p.onrender.com/health
+- **API Documentation:** https://kasparro-backend-ranjan-p.onrender.com/docs
+- **Statistics:** https://kasparro-backend-ranjan-p.onrender.com/stats
+- **Get Data:** https://kasparro-backend-ranjan-p.onrender.com/data?page=1&page_size=10
+
+---
 
 A production-grade ETL pipeline and backend API system for cryptocurrency data ingestion, featuring robust error handling, incremental ingestion, schema drift detection, and comprehensive observability.
 
